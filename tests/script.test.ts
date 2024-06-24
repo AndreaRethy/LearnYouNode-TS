@@ -1,6 +1,10 @@
 import { sayHello } from "../src/hello-world"
 import { sumVarious } from "../src/baby-steps"
 import { countLines } from "../src/my-first-io"
+import { countLinesAsync } from "../src/my-first-async-io"
+
+const path = require('node:path');
+let filePath: string = path.join(__dirname, 'test-file.txt');
 
 // 1. hello-world
 describe('Should log Hello World', () => {
@@ -27,9 +31,15 @@ describe('Should log Hello World', () => {
 // 3. my-first-io
 describe('Should log 4', () => {
   it('should return true', () => {
-    const path = require('node:path');
-    let filePath = path.join(__dirname, 'test-file.txt');
     countLines(filePath);
-    expect(console.log).toHaveBeenCalledWith(4)
-  })
-})
+    expect(console.log).toHaveBeenCalledWith(4);
+  });
+});
+
+// 4. my-first-async-io
+describe('Should log 4', () => {
+  it('should return true', () => {
+    countLinesAsync(filePath);
+    expect(console.log).toHaveBeenCalledWith(4);
+  });
+});
