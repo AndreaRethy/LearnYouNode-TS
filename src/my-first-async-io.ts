@@ -1,5 +1,5 @@
+const fs = require('node:fs');
 export async function countLinesAsync(file: string) {
-    const fs = require('node:fs');
     let counter = 0;
 
     fs.readFile(file, 'utf-8', (err: string, data: string) => {

@@ -2,9 +2,11 @@ import { sayHello } from "../src/hello-world"
 import { sumVarious } from "../src/baby-steps"
 import { countLines } from "../src/my-first-io"
 import { countLinesAsync } from "../src/my-first-async-io"
+import { listFiles } from "../src/filtered-ls"
 
+const fs = require('node:fs');
 const path = require('node:path');
-let filePath: string = path.join(__dirname, 'test-file.txt');
+const directory: string = __dirname;
 
 // 1. hello-world
 describe('Should log Hello World', () => {
@@ -31,15 +33,31 @@ describe('Should log Hello World', () => {
 // 3. my-first-io
 describe('Should log 4', () => {
   it('should return true', () => {
+    let filePath: string = path.join(directory, 'test-file.txt');
     countLines(filePath);
     expect(console.log).toHaveBeenCalledWith(4);
   });
 });
 
 // 4. my-first-async-io
-describe('Should log 4', () => {
-  it('should return true', () => {
-    countLinesAsync(filePath);
-    expect(console.log).toHaveBeenCalledWith(4);
+describe('Should log 5', () => {
+  it('should return true', async () => {
+    let filePath2: string = path.join(directory, 'test-file2.txt');
+    await countLinesAsync(filePath2);
+    expect(console.log).toHaveBeenCalledWith(5);
+  });
+});
+
+// 5. filtered-ls
+// test('Should log test-file.txt', async () => {
+//   await listFiles('ts', directory)
+//   expect(console.log).toHaveBeenCalledWith('script.test.ts');
+// });
+
+describe('Should log script.test.ts', () => {
+  it('should return true', async () => {
+    console.log = jest.fn();
+    await listFiles('ts', directory);
+    expect(console.log).toHaveBeenCalledWith('script.test.ts');
   });
 });
